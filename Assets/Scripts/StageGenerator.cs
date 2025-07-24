@@ -33,9 +33,10 @@ public class StageGenerator : MonoBehaviour
             for (int i = currentChipIndex + 1; i <= preInstance; i++)
             {
                 GameObject stageObject = Instantiate(stageChip[0]);
-                stageObject.transform.position = new Vector3(0,0,i * 30f);
+                stageObject.transform.position = new Vector3(0, 0, i * 30f);
                 //生成したステージチップを管理リストに追加
                 generateStageList.Add(stageObject);
+                currentChipIndex++;
             }
         }
     }
