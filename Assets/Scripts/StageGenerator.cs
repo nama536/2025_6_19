@@ -1,43 +1,46 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class StageGenerator : MonoBehaviour
 {
-    //ターゲットキャラクターの保持用変数
-    public Transform character;
-    //ステージのPrefabを配列で管理する変数
-    public GameObject[] stageChip;
-    //Sceneに実体化させたステージのPrefabを管理する配列
-    public List<GameObject> generateStageList = new List<GameObject>();
-    //ステージ数をカウントするインデックス
-    public int preInstance = 5;
-    //
-    public int currentChipIndex;
+    public Transform character;//ターゲットキャラクターの保持用変数
+    public GameObject[] stageChip;//ステージのPrefabを配列で管理する変数
+    public List<GameObject> generateStageList = new List<GameObject>();//Sceneに実体化させたステージのPrefabを管理する配列
+    public int preInstance = 5;//ステージ数をカウントするインデックス
+    public int currentChipIndex;//
 
     void Start()
     {
         
     }
 
-    // Update is called once per frame
     void Update()
     {
         //キャラクターの現在位置から現在のステージチップのインデックスを計算
-        int characterPositionIndex = (int)(character.position.z / 30f);
+        int characterPositionIndex = (int)(character.position.z / 30f);//キャラが30進んだら1増える変数
+        Debug.Log(characterPositionIndex);
 
-        //次のステージチップに入ったらステージの最新処理を行う
-        if (characterPositionIndex + preInstance > currentChipIndex)
+        //キャラクターが進んだらステージチップを追加で生成する
+        for (int i = preInstance + characterPositionIndex; i >= preInstance; i++)
         {
-            //指定のステージチップを作成
-            for (int i = currentChipIndex + 1; i <= preInstance; i++)
+            //最初に作ったステージ数+自分の通過したステージ数だけステージを生成する
+            if (generateStageList.Count > preInstance + characterPositionIndex)
             {
-                GameObject stageObject = Instantiate(stageChip[0]);
-                stageObject.transform.position = new Vector3(0, 0, i * 30f);
-                //生成したステージチップを管理リストに追加
-                generateStageList.Add(stageObject);
-                currentChipIndex++;
+                return;
             }
+
+            int randomValue = Random.Range(0,stageChip.Length);//乱数を生成する
+            Debug.Log(randomValue);
+
+            GameObject stageObject = Instantiate(stageChip[randomValue]);//ここで作るステージをランダムに変更する
+            stageObject.transform.position = new Vector3(0, 0, currentChipIndex * 30f);
+            
+            generateStageList.Add(stageObject);//生成したステージチップを管理リストに追加
+            currentChipIndex++;
         }
+
+            //次のステージチップに入ったらステージの最新処理を行う
     }
 }
