@@ -27,6 +27,8 @@ public class NejikoController : MonoBehaviour
     float recoverTime;//キャラクターが止まってから動き出すまでの復帰時間
     public int playerHitPoint = 3;//プレイヤーのHP
 
+    public PlayerLife playerLife;//外部の処理(クラス)を変数として読み込む
+
     bool IsStan()//キャラクターがスタン中か判断するクラス
     {
         return recoverTime > 0.0f;
@@ -125,6 +127,7 @@ public class NejikoController : MonoBehaviour
             playerHitPoint--;//HPマイナス1
             animator.SetTrigger("damage");//ダメージモーション発動
             Destroy(hit.gameObject);//ぶつかった相手を消す
+            playerLife.hitFlag = true;//PlayerLifeのHPを下げるやつ起動
         }
     }
 }
