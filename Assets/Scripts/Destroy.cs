@@ -1,18 +1,31 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SocialPlatforms.Impl;
+using UnityEngine.UI;
 
 public class Destroy : MonoBehaviour
 {
-    //êŠO‚Éo‚½ƒIƒuƒWƒFƒNƒg‚ğÁ‚·ˆ—‚ğ‘‚­
+    [SerializeField] TextMeshProUGUI scoreText;
+    private int score;
+
+
+    //ï¿½ï¿½Oï¿½Éoï¿½ï¿½ï¿½Iï¿½uï¿½Wï¿½Fï¿½Nï¿½gï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.tag == "Candy")
+        if (other.gameObject.tag == "Candy")
         {
             Destroy(other.gameObject);
+            score++;
+            scoreText.text = "score:" + score.ToString();
         }
+    }
+
+    void Start()
+    {
+        scoreText.text = "score:" + score.ToString();
     }
 
 }

@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - Candy
+  - Robo
+  - SpeedUP
   layers:
   - Default
   - TransparentFX

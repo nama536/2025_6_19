@@ -14,7 +14,7 @@ public class NejikoController : MonoBehaviour
     Vector3 moveDirection = Vector3.zero;
     public float speed = 0f;
     Animator animator;
-    
+
     public float jumpPower = 0f;//ジャンプの高さを決める変数
     public float gravityPower = 0f;//重力の強さを決める変数
 
@@ -69,7 +69,7 @@ public class NejikoController : MonoBehaviour
         }
 
         //X方向は目標のポジションまでの差分で速度を出す
-            float rationX = (targetLine * LineWidth - transform.position.x) / LineWidth;
+        float rationX = (targetLine * LineWidth - transform.position.x) / LineWidth;
         moveDirection.x = rationX * speed;
         //右レーン切り替え
         if (Input.GetKeyDown("right") || Input.GetKeyDown("d"))
@@ -129,5 +129,19 @@ public class NejikoController : MonoBehaviour
             Destroy(hit.gameObject);//ぶつかった相手を消す
             playerLife.hitFlag = true;//PlayerLifeのHPを下げるやつ起動
         }
+        else if (hit.gameObject.tag == "SpeedUP")
+        {
+            Debug.Log("スピードアップ");
+            StartCoroutine("SpeedUP");
+            Destroy(hit.gameObject);
+        }
+    }
+
+    IEnumerator SpeedUP()
+    {
+        speed = 20f;
+
+        yield return new WaitForSeconds(1f);
+        speed = 4f;
     }
 }
